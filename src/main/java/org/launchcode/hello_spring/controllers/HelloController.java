@@ -1,11 +1,10 @@
 package org.launchcode.hello_spring.controllers;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 @Controller
-@ResponseBody
-@RequestMapping("hello")
 public class HelloController {
 
 //    @GetMapping("hello")
@@ -19,9 +18,11 @@ public class HelloController {
         return "Goodbye, Spring!";
     }
 
-    @RequestMapping(method = {RequestMethod.GET, RequestMethod.POST})
-    public String helloWithQueryParam(@RequestParam String name) {
-        return "Hello, " + name + "!";
+    @RequestMapping(value ="hello", method = {RequestMethod.GET, RequestMethod.POST})
+    public String helloWithQueryParam(@RequestParam String name, Model model) {
+        String greeting = "Hello, " + name + "!";
+        model.addAttribute("greeting", greeting);
+        return "hello";
     }
 
 //    @GetMapping("{name}")
@@ -31,21 +32,7 @@ public class HelloController {
 
     @GetMapping("form")
     public String helloForm() {
-        return "<html>" +
-                "<body>" +
-                "<form action='greeting' method='post'>" +
-                "<input type='text' name='name'>" +
-                "<select name='language'>" +
-                "<option value='english'>English</option>" +
-                "<option value='french'>French</option>" +
-                "<option value='italian'>Italian</option>" +
-                "<option value='spanish'>Spanish</option>" +
-                "<option value='german'>German</option>" +
-                "</select>" +
-                "<input type='submit' value='Greet me!'>" +
-                "</form>" +
-                "</body>" +
-                "</html>";
+        return "form";
     }
 
     @RequestMapping(value="greeting", method = RequestMethod.POST)
